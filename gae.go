@@ -140,7 +140,7 @@ func Serve(yamlPath string, handler http.Handler) {
 		handler = http.DefaultServeMux
 	}
 
-	if !IsProdAppEngine() {
+	if !IsProdAppEngine() && yamlPath != "" {
 		var err error
 		handler, err = Static(yamlPath, handler)
 		if err != nil {

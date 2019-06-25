@@ -52,6 +52,11 @@ type ContentType struct {
 //  - the Status type to wrap another response with a HTTP status code
 type Handler func(ctx context.Context, r *http.Request) interface{}
 
+// Handle is a convenience method around the Handler type.
+func Handle(pattern string, handler func(ctx context.Context, r *http.Request) interface{}) {
+	http.Handle(pattern, Handler(handler))
+}
+
 // ServeHTTP implements http.Handler.
 func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
