@@ -1,0 +1,8 @@
+handlers:
+- url: /foo
+  static_dir: testdata
+  http_headers:
+    X-Test: 123
+
+other:
+- ignored: 1

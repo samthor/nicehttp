@@ -1,0 +1,9 @@
+handlers:
+- url: /foo
+  static_dir: testdata
+
+- url: /bar/(.*)\.md
+  static_files: testdata/\1.\2.txt
+  upload: foo
+
+runtime: go111
