@@ -100,6 +100,9 @@ retry:
 		http.Redirect(w, r, target, http.StatusSeeOther)
 
 	case io.Reader:
+		if closer, ok := v.(io.ReadCloser); ok {
+			defer closer.Close()
+		}
 		_, err = io.Copy(w, v)
 
 	case []byte:
