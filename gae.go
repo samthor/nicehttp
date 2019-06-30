@@ -67,8 +67,12 @@ func buildHandler(rules []handlerRule, fallback http.Handler) (http.Handler, err
 		format := "^%s"
 		if rule.StaticFiles != "" {
 			format += "$" // files match whole thing
-		} else if strings.HasSuffix(rule.StaticDir, "/") {
+		} else if !strings.HasSuffix(rule.StaticDir, "/") {
 			format += "/" // static_dir must end with "/"
+		}
+
+		if !strings.HasPrefix(rule.URL, "/") {
+			return nil, errors.New("expected static URL to begin with /")
 		}
 
 		safe := fmt.Sprintf(format, rule.URL)
