@@ -66,6 +66,9 @@ retry:
 	var err error
 
 	switch v := out.(type) {
+	case nil:
+		// do nothing
+
 	case ContentType:
 		w.Header().Set("Content-Type", v.ContentType)
 		out = v.Response
