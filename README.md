@@ -4,7 +4,7 @@ YMMV.
 
 See [the godoc](https://godoc.org/github.com/samthor/nicehttp) for documentation.
 
-# Convenience handler type
+## Convenience handler type
 
 The core `Handler` type looks like this and implements `http.Handler`:
 
@@ -19,3 +19,13 @@ See [the godoc](https://godoc.org/github.com/samthor/nicehttp#Handler) for more 
 
 Yes, this prevents static type checking for your HTTP handlers.
 Yes, the convenience is worth it.
+
+## App Engine
+
+The `dev_appserver` script seems to be going away for runtimes of `go112` and beyond, which means your program will no longer read its "app.yaml" in development.
+Static handlers will still work in production ¯\\_\(ツ\)_/¯
+
+Run `nicehttp.Serve("app.yaml", nil)` to host your application with:
+
+* static handler support in development, and
+* automatic serving on the environment variable `PORT`
