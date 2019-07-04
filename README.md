@@ -23,7 +23,7 @@ Yes, the convenience is worth it.
 ## App Engine
 
 The `dev_appserver` script seems to be going away for runtimes of `go112` and beyond, which means your program will no longer read its "app.yaml" in development.
-Static handlers will still work in production ¯\\_\(ツ\)_/¯
+Static handlers will still work in production ¯‍\‍_‍(‍ツ‍)‍_‍/‍¯
 
 Run `nicehttp.Serve("app.yaml", nil)` to host your application with:
 
