@@ -46,6 +46,7 @@ type ContentType struct {
 //  - the Template type to execute a template
 //  - the Redirect type to cause a StatusSeeOther
 //  - io.Reader to be piped to the output
+//  - http.Handler to serve another real handler
 //  - ... all other responses to be written as JSON
 // Additionally, wrapper types are supported:
 //  - the ContentType type to wrap another repsonse with a given Content-Type header
@@ -68,6 +69,10 @@ retry:
 	switch v := out.(type) {
 	case nil:
 		// do nothing
+
+	case http.Handler:
+		v.ServeHTTP(w, r)
+		break
 
 	case ContentType:
 		w.Header().Set("Content-Type", v.ContentType)

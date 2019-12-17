@@ -139,6 +139,7 @@ func Static(yamlPath string, fallback http.Handler) (http.Handler, error) {
 
 // Serve hosts this App Engine application.
 // In dev, hosts on port 8080 and reads the passed YAML file for static handlers. This is needed for runtimes like go112, which don't serve handlers locally.
+// Don't use this for go111 or earlier, which still use dev_appserver.
 func Serve(yamlPath string, handler http.Handler) {
 	if handler == nil {
 		handler = http.DefaultServeMux
