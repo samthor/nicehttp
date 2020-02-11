@@ -1,7 +1,6 @@
 package nicehttp
 
 import (
-	"context"
 	"crypto/md5"
 	"encoding/json"
 	"errors"
@@ -47,21 +46,20 @@ type ContentType struct {
 //  - the Redirect type to cause a StatusSeeOther
 //  - io.Reader to be piped to the output
 //  - http.Handler to serve another real handler
-//  - ... all other responses to be written as JSON
+//  - ... all other responses to be written as JSON, with ETag/If-Not-Modified support for GET
 // Additionally, wrapper types are supported:
 //  - the ContentType type to wrap another repsonse with a given Content-Type header
 //  - the Status type to wrap another response with a HTTP status code
-type Handler func(ctx context.Context, r *http.Request) interface{}
+type Handler func(w http.ResponseWriter, r *http.Request) interface{}
 
 // Handle is a convenience method around the Handler type.
-func Handle(pattern string, handler func(ctx context.Context, r *http.Request) interface{}) {
+func Handle(pattern string, handler func(w http.ResponseWriter, r *http.Request) interface{}) {
 	http.Handle(pattern, Handler(handler))
 }
 
 // ServeHTTP implements http.Handler.
 func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-	out := h(ctx, r)
+	out := h(w, r)
 
 retry:
 	var err error
